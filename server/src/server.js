@@ -847,6 +847,8 @@ app.post("/api/save-edit", function(req, res) {
   }
   let id = vars.shotId;
   let url = vars.url;
+  let x = vars.x;
+  let y = vars.y;
   let thumbnail = vars.thumbnail || null;
   if (!isValidClipImageUrl(url)) {
     sendRavenMessage(req, "Attempt to edit shot to set invalid clip url.");
@@ -864,6 +866,8 @@ app.post("/api/save-edit", function(req, res) {
     }
     let name = shot.clipNames()[0];
     shot.getClip(name).image.url = url;
+    shot.getClip(name).image.dimensions.x = x;
+    shot.getClip(name).image.dimensions.y = y;
     shot.thumbnail = thumbnail;
     return shot.update();
   }).then((updated) => {
